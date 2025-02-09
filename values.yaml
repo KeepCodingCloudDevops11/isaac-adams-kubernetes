@@ -1,0 +1,34 @@
+# Default values for WordPress.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+wordpress:
+  replicaCount: 3
+  image:
+    repository: wordpress
+    tag: latest
+  service:
+    type: NodePort
+    port: 80
+    targetPort: 80
+
+
+mysql:
+  rootPassword: rootpassword
+  user: wpuser
+  password: wppassword
+  database: wordpress
+  image:
+    repository: bitnami/mysql
+    tag: 8.0
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: standard
+    accessMode: ReadWriteOnce
+namespace: proyectoFinal
+hpa:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  cpuUtilization: 70
